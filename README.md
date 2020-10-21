@@ -39,6 +39,11 @@ Node.js backend with MongoDB clsuter
 1. `NODE_ENV=production` 
 2. `LOGGER_CONFIG={"disableClustering":true,"appenders":{"out":{"type":"stdout","layout":{"type":"pattern","pattern":"%[ [%d] [%p] %] %c - %x{correlationId} - %m"}}},"categories":{"default":{"appenders":["out"],"level":"trace"}}}`
 3. `MONGO_DB_URL=mongo-uri`
+4. `CLIENT_SECRET=CLIENT_SECRET`
+5. `CLIENT_ID=CLIENT_ID`
+6. `IDP_TENANT_HOSTNAME=IDP_TENANT_HOSTNAMEi`
+7. `IDP_URI=IDP_URI`
+8. `TENANT_USER_LOGIN=TENANT_USER_LOGIN`
 
 ## Service Dependencies:
 ### Upstream
