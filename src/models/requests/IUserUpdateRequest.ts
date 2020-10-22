@@ -6,3 +6,9 @@ export interface IUserUpdateRequest {
   role: Role;
   department: string;
 }
+
+export interface IResetPasswordRequest {
+  password: string;
+  username: string;
+  id?: string;
+}

@@ -2,6 +2,7 @@ import Validator from 'fastest-validator';
 import { ValidationError } from '../../exceptions/ValidationError';
 import { IUserUpdateRequest } from '../../models/requests/IUserUpdateRequest';
 import { Role } from '../../models/Role';
+import { Status } from '../../models/Status';
 
 const UpdateUserSchema = {
   $$strict: true,
@@ -23,6 +24,11 @@ const UpdateUserSchema = {
   role: {
     type: 'string',
     enum: Object.values(Role),
+    optional: true,
+  },
+  status: {
+    type: 'string',
+    enum: Object.values(Status),
     optional: true,
   },
 };
