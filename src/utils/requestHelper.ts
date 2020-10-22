@@ -93,7 +93,13 @@ export default class RequestHelper {
   /**
    * T stands for type and R stands for request type
    */
-  postWithAuthJson<T, R>(url: string, postBody: R, username = config.clientId, password = config.clientSecret) {
+  requestWithAuthJson<T, R>(
+    url: string,
+    postBody: R,
+    method = 'POST',
+    username = config.clientId,
+    password = config.clientSecret,
+  ) {
     logger.info(
       `Hitting post with form data ${url} with ${JSON.stringify(postBody).replace(
         /password" *: *("(.*?)"(,|\s|)|\s*\{(.*?)\}(,|\s|))/g,
@@ -104,10 +110,35 @@ export default class RequestHelper {
       request(
         `${config.idPUri}/${url}`,
         {
-          method: 'POST',
+          method,
           gzip: true,
           timeout: 600000,
           json: postBody,
+          headers: {
+            'vaccination-irp-request-correlation-id': correlationIDHelper.getCorrelationId(),
+            host: config.idpTenantHostname,
+          },
+        },
+        (error: Error, response: request.Response, body: T) => {
+          if (error) return reject(error);
+          if (response.statusCode !== 200) return reject(body);
+          return resolve(body);
+        },
+      ).auth(username, password, true);
+    });
+  }
+
+  /**
+   * T stands for type
+   */
+  deleteWithAuth<T>(url: string, username = config.clientId, password = config.clientSecret) {
+    logger.info(`Hitting delete with ${url} `);
+    return new Promise<T>((resolve, reject) => {
+      request(
+        `${config.idPUri}/${url}`,
+        {
+          method: 'DELETE',
+          json: true,
           headers: {
             'vaccination-irp-request-correlation-id': correlationIDHelper.getCorrelationId(),
             host: config.idpTenantHostname,

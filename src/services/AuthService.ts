@@ -55,7 +55,7 @@ export class AuthService extends BaseService {
       },
     };
     try {
-      const result = await this._requestHelper.postWithAuthJson<IClaimsWithId, IIDPSignupRequest>('/users', jsonBody);
+      const result = await this._requestHelper.requestWithAuthJson<IClaimsWithId, IIDPSignupRequest>('/users', jsonBody);
       logger.info('signup success: ->>', JSON.stringify(result));
       return this.login({ username, password });
     } catch (err) {

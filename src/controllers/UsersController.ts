@@ -15,4 +15,22 @@ export class UsersController {
       return next(error);
     }
   }
+
+  async update(req: Request, res: Response, next: NextFunction) {
+    try {
+      const data = await this.userService.update(req.params.id, req.body, req.user);
+      return res.status(200).json({ message: 'user details updated!', data: { id: req.params.id, ...data.claims } });
+    } catch (error) {
+      return next(error);
+    }
+  }
+
+  async delete(req: Request, res: Response, next: NextFunction) {
+    try {
+      await this.userService.delete(req.params.id, req.user);
+      return res.status(200).json({ message: `User with id (${req.params.id}) deleted successfully!` });
+    } catch (error) {
+      return next(error);
+    }
+  }
 }

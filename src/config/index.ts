@@ -15,7 +15,7 @@ interface IConfig {
 const config: IConfig = <IConfig>{
   port: 80,
   production: false,
-  authorizedRole: [Role.root],
+  authorizedRole: [Role.root, Role.admin],
 };
 
 if (process.env.PORT) config.port = parseInt(process.env.PORT);
