@@ -22,7 +22,7 @@ export class UserService extends BaseService {
     const { index = 1, size = 1000, role = 'all' } = body;
     const data = { role: role === 'all' ? undefined : role };
     const result = await this._requestHelper.requestWithAuthJson<IUserDataWithClaim, { role: string | undefined }>(
-      `/users/query?size=${size}&index=${index}`,
+      `users/query?size=${size}&index=${index}`,
       data,
     );
     return this.transform(result, byUser);
@@ -30,7 +30,7 @@ export class UserService extends BaseService {
 
   async delete(userId: string, byUser?: IUserToken) {
     await this.authorize(Permission.delete, byUser);
-    return this._requestHelper.deleteWithAuth<{ ok: true }>(`/users/${userId}`);
+    return this._requestHelper.deleteWithAuth<{ ok: true }>(`users/${userId}`);
   }
 
   async update(userId: string, body: IUserUpdateRequest, byUser?: IUserToken) {
@@ -43,7 +43,7 @@ export class UserService extends BaseService {
     await this.authorize(Permission.edit, byUser);
     validators.validateUserPassword(body);
     const { password, username, id } = body;
-    const result = await this._requestHelper.requestWithAuthJson('/users/reset_password', {
+    const result = await this._requestHelper.requestWithAuthJson('users/reset_password', {
       login_id: config.tenantUserLogin,
       username,
       new_password: password,
@@ -54,7 +54,7 @@ export class UserService extends BaseService {
 
   async getById(userId: string, byUser?: IUserToken) {
     await this.authorize(Permission.view, byUser);
-    const { id, claims } = await this._requestHelper.getWithAuth<IClaimsWithId>(`/users/${userId}`);
+    const { id, claims } = await this._requestHelper.getWithAuth<IClaimsWithId>(`users/${userId}`);
     return {
       id,
       ...claims,
@@ -75,7 +75,7 @@ export class UserService extends BaseService {
 
   private updateClaims(userId: string, body: Partial<IClaims>) {
     return this._requestHelper.requestWithAuthJson<IClaimsWithId, { claims: Partial<IClaims> }>(
-      `/users/${userId}`,
+      `users/${userId}`,
       { claims: body },
       'PATCH',
     );
