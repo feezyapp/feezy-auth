@@ -1,6 +1,10 @@
 // NPM imports
 import express from 'express';
 import bodyParser from 'body-parser';
+import helmet from 'helmet';
+// import postmanToSwagger from 'postman-2-swagger';
+// import * as swaggerUi from 'swagger-ui-express';
+// import collection from './vaccinationIRP.postman_collection.json';
 
 // Application imports
 import config from './config';
@@ -17,11 +21,12 @@ const logger = loggerFactory.getLogger();
 const app = express();
 
 // To avoid client to know about express
-app.disable('x-powered-by');
+app.use(helmet());
 
 // To avoid 304 content not modified status.
 app.disable('etag');
-
+// eslint-disable-next-line @typescript-eslint/no-unsafe-call
+// app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(postmanToSwagger(collection)));
 let server: import('http').Server;
 (async () => {
   await setupDB();
