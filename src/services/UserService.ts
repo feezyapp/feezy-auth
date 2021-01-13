@@ -48,7 +48,7 @@ export class UserService extends BaseService {
       username,
       new_password: password,
     });
-    if (byUser) await this.updateClaims(byUser.sub, { isPasswordChangeRequired: id ? true : false });
+    if (byUser) await this.updateClaims(id ? id : byUser.sub, { isPasswordChangeRequired: id ? true : false });
     return result;
   }
 
