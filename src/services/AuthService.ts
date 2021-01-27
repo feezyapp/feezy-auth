@@ -1,21 +1,24 @@
 import config from '../config';
 import { AppError } from '../exceptions/AppError';
-import { IClaimsWithId, ITokenWithUser } from '../models/ITokenWithUser';
 import { IIDPLoginRequest } from '../models/requests/IIDPLoginRequest';
-import { IIDPSignupRequest, ISignupClaims } from '../models/requests/IIDPSignupRequest';
+import { ISignupClaims } from '../models/requests/IIDPSignupRequest';
 import { ILoginRequest } from '../models/requests/ILoginRequest';
 import { ISignupRequest } from '../models/requests/ISignupRequest';
 import { Role } from '../models/Role';
 import { Status } from '../models/Status';
+import { UserAccountRepository } from '../repositories/UserAccounts';
 import loggerFactory from '../utils/logging';
-import RequestHelper from '../utils/requestHelper';
 import validators from '../utils/validators';
 import { BaseService } from './BaseService';
 const logger = loggerFactory.getLogger('AuthService');
 
 export class AuthService extends BaseService {
-  constructor(protected _requestHelper: RequestHelper) {
+  constructor() {
     super();
+  }
+
+  protected get userAccountRepo() {
+    return new UserAccountRepository();
   }
 
   async login(body: ILoginRequest) {
@@ -33,31 +36,19 @@ export class AuthService extends BaseService {
 
   async signup(body: ISignupRequest) {
     validators.validateCreateUser(body);
-    const { name, email, role, department, password, username } = body;
+    const { firstname, email, lastname, password, contact } = body;
     const _signupRequest: ISignupClaims = {
-      name,
+      firstname,
+      lastname,
       email,
       status: Status.active,
-      role: role || Role.admin,
-      department,
-      isPasswordChangeRequired: true,
-      username,
+      role: Role.staff,
+      contact,
+      password,
     };
 
-    const jsonBody: IIDPSignupRequest = {
-      claims: _signupRequest,
-      logins: {
-        [config.tenantUserLogin]: {
-          type: 'password',
-          key: username,
-          password,
-        },
-      },
-    };
     try {
-      const result = await this._requestHelper.requestWithAuthJson<IClaimsWithId, IIDPSignupRequest>('users', jsonBody);
-      logger.info('signup success: ->>', JSON.stringify(result));
-      return this.login({ username, password });
+      return this.userAccountRepo.save(_signupRequest);
     } catch (err) {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
       if (err && err.error === 'username_taken') {
@@ -66,9 +57,10 @@ export class AuthService extends BaseService {
     }
   }
 
-  private async getToken(requestBody: IIDPLoginRequest) {
+  private getToken(requestBody: IIDPLoginRequest) {
     try {
-      return await this._requestHelper.postWithAuthFormData<ITokenWithUser, IIDPLoginRequest>('token', requestBody);
+      logger.info(requestBody);
+      return Promise.resolve('ok');
     } catch (err) {
       throw new AppError('Invalid Credentials', 'You have entered an invalid username or password', 401);
     }

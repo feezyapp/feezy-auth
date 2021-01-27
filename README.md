@@ -1,16 +1,12 @@
-# Covid-19 vaccination relying-party
-This is a IRP service responsible for AUTH related tasks and user mgmt tasks. 
+# feezy-auth
+This is a service responsible for AUTH related tasks and user mgmt tasks. 
 
 ## Service Architecture:
 Node.js backend with MongoDB clsuter
 
 ## Service Features:
 
-## Onboarding Checklist / FAQ:
-*  [Click here](./CheckList.md)
-
 ## Build Steps:
-* **swarm mode** - development: `./deploy dev`
 * **docker-compose** - development `sh start.sh`
 * **swarm mode** - production-like: `./deploy`
 
@@ -39,11 +35,6 @@ Node.js backend with MongoDB clsuter
 1. `NODE_ENV=production` 
 2. `LOGGER_CONFIG={"disableClustering":true,"appenders":{"out":{"type":"stdout","layout":{"type":"pattern","pattern":"%[ [%d] [%p] %] %c - %x{correlationId} - %m"}}},"categories":{"default":{"appenders":["out"],"level":"trace"}}}`
 3. `MONGO_DB_URL=mongo-uri`
-4. `CLIENT_SECRET=CLIENT_SECRET`
-5. `CLIENT_ID=CLIENT_ID`
-6. `IDP_TENANT_HOSTNAME=IDP_TENANT_HOSTNAMEi`
-7. `IDP_URI=IDP_URI`
-8. `TENANT_USER_LOGIN=TENANT_USER_LOGIN`
 
 ## Service Dependencies:
 ### Upstream

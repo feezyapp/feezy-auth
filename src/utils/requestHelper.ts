@@ -10,7 +10,7 @@ export default class RequestHelper {
     logger.info(`Hitting get with ${url}`);
     const headerBody = {
       Authorization: accessToken ? `${accessToken}` : undefined,
-      'vaccination-irp-correlation-id': correlationIDHelper.getCorrelationId(),
+      'feezy-auth-irp-correlation-id': correlationIDHelper.getCorrelationId(),
     };
     return new Promise<T>((resolve, reject) => {
       request(
@@ -33,7 +33,7 @@ export default class RequestHelper {
   getWithAuth<T>(url: string, username = config.clientId, password = config.clientSecret) {
     logger.info(`Hitting get with ${url}`);
     const headerBody = {
-      'vaccination-irp-correlation-id': correlationIDHelper.getCorrelationId(),
+      'feezy-auth-irp-correlation-id': correlationIDHelper.getCorrelationId(),
       host: config.idpTenantHostname,
     };
     return new Promise<T>((resolve, reject) => {
@@ -58,7 +58,7 @@ export default class RequestHelper {
     logger.info(`Hitting post with body ${url}`);
     const headerBody = {
       Authorization: accessToken ? `${accessToken}` : undefined,
-      'vaccination-irp-correlation-id': correlationIDHelper.getCorrelationId(),
+      'feezy-auth-irp-correlation-id': correlationIDHelper.getCorrelationId(),
     };
     return new Promise<T>((resolve, reject) => {
       request(
@@ -98,7 +98,7 @@ export default class RequestHelper {
           json: true,
           form: postBody,
           headers: {
-            'vaccination-irp-correlation-id': correlationIDHelper.getCorrelationId(),
+            'feezy-auth-irp-correlation-id': correlationIDHelper.getCorrelationId(),
             host: config.idpTenantHostname,
           },
         },
@@ -135,7 +135,7 @@ export default class RequestHelper {
           gzip: true,
           json: postBody,
           headers: {
-            'vaccination-irp-correlation-id': correlationIDHelper.getCorrelationId(),
+            'feezy-auth-irp-correlation-id': correlationIDHelper.getCorrelationId(),
             host: config.idpTenantHostname,
           },
         },
@@ -160,7 +160,7 @@ export default class RequestHelper {
           method: 'DELETE',
           json: true,
           headers: {
-            'vaccination-irp-correlation-id': correlationIDHelper.getCorrelationId(),
+            'feezy-auth-irp-correlation-id': correlationIDHelper.getCorrelationId(),
             host: config.idpTenantHostname,
           },
         },
@@ -177,7 +177,7 @@ export default class RequestHelper {
     logger.info(`Hitting put with body ${url}`);
     const headerBody = {
       Authorization: accessToken ? `${accessToken}` : undefined,
-      'vaccination-irp-correlation-id': correlationIDHelper.getCorrelationId(),
+      'feezy-auth-irp-correlation-id': correlationIDHelper.getCorrelationId(),
     };
     return new Promise<T>((resolve, reject) => {
       request(

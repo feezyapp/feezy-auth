@@ -1,18 +1,14 @@
 import Validator from 'fastest-validator';
 import { ValidationError } from '../../exceptions/ValidationError';
 import { ISignupRequest } from '../../models/requests/ISignupRequest';
-import { Role } from '../../models/Role';
 
 const AuthSchema = {
   $$strict: true,
-  name: {
+  firstname: {
     type: 'string',
-    min: 1,
   },
-  username: {
+  lastname: {
     type: 'string',
-    pattern: new RegExp('^[a-z0-9]+$', 'i'),
-    max: 50,
   },
   password: {
     type: 'string',
@@ -24,16 +20,9 @@ const AuthSchema = {
   },
   email: {
     type: 'email',
-    optional: true,
   },
-  department: {
+  contact: {
     type: 'string',
-    optional: true,
-  },
-  role: {
-    type: 'string',
-    enum: Object.values(Role),
-    optional: true,
   },
 };
 

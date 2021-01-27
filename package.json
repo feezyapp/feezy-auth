@@ -1,5 +1,5 @@
 {
-  "name": "covid-19-vaccination-irp",
+  "name": "covid-19-feezy-auth-irp",
   "version": "0.0.1",
   "scripts": {
     "prodstart": "export NODE_ENV=production && yarn run start",

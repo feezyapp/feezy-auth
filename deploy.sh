@@ -18,13 +18,13 @@ done
 if [ "$1" = "dev" ]
 then
   echo "Building development image ..."
-  docker build . -f dev.Dockerfile -t vaccination:local
+  docker build . -f dev.Dockerfile -t feezy-auth:local
 else
   echo "Building production image ..."  
-  docker build . -f Dockerfile -t vaccination:local
+  docker build . -f Dockerfile -t feezy-auth:local
 fi
 
 echo "Deploying stack"
 docker stack deploy $DEPLOYMENT_NAMESPACE --compose-file docker-compose.yml --resolve-image always
 
-docker service logs covid-19_vaccination -f
+docker service logs covid-19_feezy-auth -f

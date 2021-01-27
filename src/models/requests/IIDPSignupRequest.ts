@@ -1,3 +1,5 @@
+import { Role } from '../Role';
+
 export interface IIDPSignupRequest {
   claims: ISignupClaims;
   logins: {
@@ -10,11 +12,11 @@ export interface IIDPSignupRequest {
 }
 
 export interface ISignupClaims {
-  name: string;
+  firstname: string;
+  lastname: string;
   email: string;
-  role: string;
-  username: string;
+  role: Role;
   status: string;
-  department: string;
-  isPasswordChangeRequired: boolean;
+  contact: string;
+  password: string;
 }

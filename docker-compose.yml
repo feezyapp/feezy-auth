@@ -1,40 +1,35 @@
 version: "3"
 services:
-  vaccination:
+  feezy-auth:
     build:
       context: .
       dockerfile: dev.Dockerfile
     environment:
       PORT: 80
       # NODE_ENV: production # to test production builds enable this.
-      MONGO_DB_URL: mongodb://vaccination-mongodb:27017/vaccination
-      CLIENT_SECRET: 9af29231f8a6ccb5e9ffa7109aabbee7176d794e91e417692444f25e26738339
-      CLIENT_ID: doh-beta-irp
-      IDP_TENANT_HOSTNAME: doh-beta-uat-idp.saal.ai
-      IDP_URI: https://doh-beta-uat-idp.saal.ai
-      TENANT_USER_LOGIN: doh-beta-users
+      MONGO_DB_URL: mongodb://feezy-auth-mongodb:27017/feezy-auth
     ports:
       - 8099:80
     volumes:
-      - vaccination-node-modules-volume:/app/node_modules
+      - feezy-auth-node-modules-volume:/app/node_modules
       - ./src:/app/src
     deploy:
       replicas: 1
     depends_on:
-      - vaccination-mongodb
+      - feezy-auth-mongodb
 
-  vaccination-mongodb:
+  feezy-auth-mongodb:
     image: mongo:latest
     environment:
       MONGO_DATA_DIR: /data/db
       MONGO_LOG_DIR: /dev/null
     volumes:
-      - vaccination-mongodb-volume:/data/vaccination-mongodb/db
+      - feezy-auth-mongodb-volume:/data/feezy-auth-mongodb/db
     ports:
       - 20017:27017
     command:
       - mongod
 
 volumes:
-  vaccination-node-modules-volume:
-  vaccination-mongodb-volume:
+  feezy-auth-node-modules-volume:
+  feezy-auth-mongodb-volume:

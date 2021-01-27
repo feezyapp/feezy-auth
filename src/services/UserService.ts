@@ -5,7 +5,6 @@ import { IUserToken } from '../models/IUserToken';
 import { IUsersListRequest } from '../models/requests/IUsersListRequest';
 import { IResetPasswordRequest, IUserUpdateRequest } from '../models/requests/IUserUpdateRequest';
 import { IUserListResponse } from '../models/response/IUserListResponse';
-import { Role } from '../models/Role';
 import RequestHelper from '../utils/requestHelper';
 import validators from '../utils/validators';
 import { BaseService } from './BaseService';

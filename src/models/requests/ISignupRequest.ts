@@ -1,8 +1,9 @@
 export interface ISignupRequest {
-  name: string;
+  firstname: string;
+  lastname: string;
   username: string;
   email: string;
   password: string;
-  department: string;
   role: string;
+  contact: string;
 }

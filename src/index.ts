@@ -2,9 +2,6 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import helmet from 'helmet';
-// import postmanToSwagger from 'postman-2-swagger';
-// import * as swaggerUi from 'swagger-ui-express';
-// import collection from './vaccinationIRP.postman_collection.json';
 
 // Application imports
 import config from './config';
@@ -13,7 +10,7 @@ import { setupDB } from './initializer';
 
 // Routes ...
 import authRoutes from './routes/auth.routes';
-import { tokenHandler, errorHandler, corsHandler, healthCheckHandler, correlationIdHandler } from './utils/middlewares';
+import { tokenHandler, errorHandler, corsHandler, healthCheckHandler } from './utils/middlewares';
 import userRoutes from './routes/user.routes';
 
 // Intializations
@@ -40,15 +37,14 @@ let server: import('http').Server;
       level: 'auto',
     }),
   );
-  app.use(correlationIdHandler);
   // jwt-decode application/json
   app.use(tokenHandler);
 
   // parse application/json
   app.use(bodyParser.json());
 
-  app.use('/auth-irp', authRoutes());
-  app.use('/authenticate-irp', userRoutes());
+  app.use('/auth', authRoutes());
+  app.use('/authenticate', userRoutes());
 
   app.use(errorHandler);
 
