@@ -45,14 +45,16 @@ export class AuthService extends BaseService {
       role: Role.staff,
       contact,
       password,
+      username: email,
     };
 
     try {
-      return this.userAccountRepo.save(_signupRequest);
+      const result = await this.userAccountRepo.save(_signupRequest);
+      return result;
     } catch (err) {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-      if (err && err.error === 'username_taken') {
-        throw new AppError('Username exists', 'Entered username has already been taken');
+      if (err && err.code === 11000) {
+        throw new AppError('Email exists', 'Entered email has already been taken');
       } else throw err;
     }
   }

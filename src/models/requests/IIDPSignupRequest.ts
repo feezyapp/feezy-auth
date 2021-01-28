@@ -19,4 +19,5 @@ export interface ISignupClaims {
   status: string;
   contact: string;
   password: string;
+  username: string;
 }

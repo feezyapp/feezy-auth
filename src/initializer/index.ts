@@ -2,6 +2,7 @@ import loggerFactory from '../utils/logging';
 const logger = loggerFactory.getLogger('DbClient');
 import { MongoClient, Db } from 'mongodb';
 import config from '../config';
+import { Repo } from '../repositories/RepoNames';
 let _dbClient: Db;
 
 export const setupDB = async () => {
@@ -12,7 +13,7 @@ export const setupDB = async () => {
         { useNewUrlParser: true, useUnifiedTopology: true },
       );
       _dbClient = _dbConnection.db();
-      // _dbClient.collection('sasa').createIndex
+      await _dbClient.collection(Repo.UserAccounts).createIndex('username', { unique: true });
       logger.info('Database is ready...');
     }
   } catch (err) {
