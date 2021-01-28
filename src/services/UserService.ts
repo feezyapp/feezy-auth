@@ -24,7 +24,8 @@ export class UserService extends BaseService {
       `users/query?size=${size}&index=${index}`,
       data,
     );
-    return this.transform(result, byUser);
+    return result;
+    // return this.transform(result, byUser);
   }
 
   async delete(userId: string, byUser?: IUserToken) {
@@ -47,7 +48,7 @@ export class UserService extends BaseService {
       username,
       new_password: password,
     });
-    if (byUser) await this.updateClaims(id ? id : byUser.sub, { isPasswordChangeRequired: id ? true : false });
+    // if (byUser) await this.updateClaims(id ? id : byUser.sub, { isPasswordChangeRequired: id ? true : false });
     return result;
   }
 
@@ -60,17 +61,17 @@ export class UserService extends BaseService {
     };
   }
 
-  private transform(usersObj: IUserDataWithClaim, byUser?: IUserToken): IUserListResponse {
-    const { index, size, total, items } = usersObj;
-    return {
-      index,
-      size,
-      total,
-      items: byUser
-        ? items.filter(user => user._id !== byUser.sub).map(user => ({ id: user._id, ...user.claims }))
-        : [],
-    };
-  }
+  // private transform(usersObj: IUserDataWithClaim, byUser?: IUserToken): IUserListResponse {
+  //   const { index, size, total, items } = usersObj;
+  //   return {
+  //     index,
+  //     size,
+  //     total,
+  //     items: byUser
+  //       ? items.filter(user => user._id !== byUser.sub).map(user => ({ id: user._id, ...user.claims }))
+  //       : [],
+  //   };
+  // }
 
   private updateClaims(userId: string, body: Partial<IClaims>) {
     return this._requestHelper.requestWithAuthJson<IClaimsWithId, { claims: Partial<IClaims> }>(

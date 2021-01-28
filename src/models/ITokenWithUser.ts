@@ -1,3 +1,5 @@
+import { Role } from './Role';
+
 export interface ITokenWithUser {
   id?: string;
   access_token: string;
@@ -7,17 +9,15 @@ export interface ITokenWithUser {
 }
 
 export interface IClaims {
-  name: string;
+  firstname: string;
   email: string;
-  role: string;
-  key: string;
+  role: Role;
+  lastname: string;
   username: string;
-  id?: string;
-  _id?: string;
+  _id: string;
   status: string;
-  department: string;
-  isApproved: boolean;
-  isPasswordChangeRequired: boolean;
+  contact: string;
+  password: string;
 }
 
 export interface IUserFromClaims {
